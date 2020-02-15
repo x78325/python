@@ -1,26 +1,38 @@
-income=int(input('请出入你的薪资')) #原始收入
+import sys
+                                   #原始收入
+
 salary = 0                         #税后收入
 shouldpay = 0                      #应纳税所得额
 tax=0                              #纳税金额
 def calculator(num):
-    shouldpay = num-5000
+    shehou=num*(1-0.165)
+    shouldpay = shehou-5000
     if shouldpay<=0:
         tax=0
-    elif 0<shouldpay<=3000:
+    elif shouldpay<=3000:
         tax=shouldpay*0.03
-    elif 3000<shouldpay<=12000:
+    elif shouldpay<=12000:
         tax=shouldpay*0.1-210
-    elif 12000<shouldpay<=25000:
+    elif shouldpay<=25000:
         tax=shouldpay*0.2-1410
-    elif 25000<shouldpay<=35000:
+    elif shouldpay<=35000:
         tax=shouldpay*0.25-2660
-    elif 35000<shouldpay<=55000:
+    elif shouldpay<=55000:
         tax=shouldpay*0.3-4410
-    elif 55000<shouldpay<=80000:
+    elif shouldpay<=80000:
         tax=shouldpay*0.35-7160
     else :
         tax=shouldpay*0.45-15160
-    salary=income-tax
+    salary=shehou-tax
     return '{:.2f}'.format(salary)
-print('你的税后收入是：{}'.format(calculator(income)))
+def main():
+    for item in sys.argv[1:]:
+        id,income=item.split(':')
+        try:
+            income=int(income)
+        except ValueError:
+            print('请在薪资的位置输入数字')
+            continue
+        print('{}的税后收入是：{}'.format(id,calculator(income)))
+main()
 
